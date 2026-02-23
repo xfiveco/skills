@@ -26,7 +26,7 @@ After receiving answers write full questions and full answers to task.md under â
 
 When all questions are answered review the codebase, prepare very detailed technical implementation plan and add it as "## Detailed Plan" to task.md. Do not start the implementation until the plan is reviewed and confirmed.
 
-When updating a plan at user's request, if necessary, update also description or answers to make sure they do not contradict the plan.
+When updating a plan at user's request, if necessary, update also description or answers to make sure they do not contradict the plan. Do not add new questions after providing the plan.
 
 When implementing the plan, remember you can always reach back to the task.md file to review the plan and answers.
 

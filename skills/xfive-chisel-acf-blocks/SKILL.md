@@ -1,6 +1,6 @@
 ---
 name: xfive-chisel-acf-blocks
-description: Create custom ACF block in WordPress themes based on Chisel 2.0
+description: Create custom ACF block in WordPress themes based on Chisel 2.0 starter theme. Use when an AI agent needs to create a custom ACF block in a project utilising Chisel 2.0 starter theme.
 ---
 
 # Skill: Creating Custom ACF Blocks in Chisel WordPress Theme
@@ -25,9 +25,10 @@ This skill provides a deterministic procedure for creating custom ACF (Advanced 
 src/blocks-acf/
 └── {block-name}/
     ├── acf-json/
-    │   └── group_{block_key}.json     # ACF field definitions
+    │   └── group_{block_key}.json    # ACF field definitions
     ├── block.json                     # Block configuration
     ├── {block-name}.twig              # Template file
+	├── script.js                      # JavaScript (optional; also serves as an import handle for styles.scss)
     └── style.scss                     # Block-specific styles (optional)
 ```
 
@@ -40,13 +41,13 @@ src/blocks-acf/
 mkdir -p src/blocks-acf/{block-name}/acf-json
 ```
 
-**Important:** Use kebab-case for block names (e.g., `custom-hero-example`, not `CustomHeroexample`)
+**Important:** Use kebab-case for block names (e.g., `custom-block`, not `CustomHeroBallerina`)
 
 ### 2. Create block.json Configuration
 
 **File:** `src/blocks-acf/{block-name}/block.json`
 
-**Required structure:**
+**Required structure (example):**
 ```json
 {
   "name": "chisel/{block-name}",
@@ -66,15 +67,19 @@ mkdir -p src/blocks-acf/{block-name}/acf-json
     "anchor": true,
     "align": ["wide", "full"],
     "alignWide": true,
-    "alignContent": false,
+    "alignContent": true,
     "className": true,
     "customClassName": true,
     "multiple": true,
     "reusable": true
   },
+  "script": "file:./script.js",
   "style": ["file:./style-script.css"]
 }
 ```
+
+**Important notice:**
+`style.scss` is imported in `script.js` for compilation. The compiled block uses `style-script.css` file into which the styles are compiled.
 
 **Critical fields:**
 - `name`: Must follow pattern `chisel/{block-name}` (kebab-case)
@@ -85,7 +90,7 @@ mkdir -p src/blocks-acf/{block-name}/acf-json
 
 **File:** `src/blocks-acf/{block-name}/acf-json/group_{unique_key}.json`
 
-**Structure:**
+**Structure (example):**
 ```json
 {
   "key": "group_{unique_identifier}",
@@ -96,7 +101,7 @@ mkdir -p src/blocks-acf/{block-name}/acf-json
       "label": "Field Label",
       "name": "field_name",
       "type": "text|image|repeater|textarea|etc",
-      "required": 0|1,
+      "required": 1,
       "instructions": "Help text for editors",
       "wrapper": {"width": "", "class": "", "id": ""}
     }
@@ -147,10 +152,10 @@ mkdir -p src/blocks-acf/{block-name}/acf-json
 
 **File:** `src/blocks-acf/{block-name}/{block-name}.twig`
 
-**Required structure:**
+**Required structure (example):**
 ```twig
 <div {{ wrapper_attributes }} data-block-id="{{ block.id }}">
-  <div class="b-{block-name}__inner {{ block.align == 'full' ? 'alignfull' : '' }}">
+  <div class="b-{block-name}__inner">
     {% if fields.required_field %}
 
       {# Block content here #}
@@ -168,7 +173,6 @@ mkdir -p src/blocks-acf/{block-name}/acf-json
 - Class naming: `b-{block-name}__element` (BEM methodology with `b-` prefix)
 - Check for required fields before rendering content
 - Include edit button fallback for empty blocks
-- **NO trailing whitespace** (will fail Twig linting)
 
 **Accessing ACF fields:**
 - Simple field: `{{ fields.field_name }}`
@@ -187,13 +191,24 @@ mkdir -p src/blocks-acf/{block-name}/acf-json
 </div>
 ```
 
-### 5. Create Block Styles
+### 5. Create Block Scripts
 
-**CRITICAL: Styles must be in the main theme styles, NOT in the block directory**
+**CRITICAL: `style.scss` must be imported in `script.js`, otherwise it will not be compiled!**
 
-**File:** `src/styles/blocks/_{block-name}.scss`
+**File:** `src/blocks-acf/{block-name}/script.js`
 
-**Structure:**
+**Structure (example):**
+```js
+import './style.scss';
+```
+
+### 6. Create Block Styles
+
+**CRITICAL: `style.scss` must be imported in `script.js`, otherwise it will not be compiled!**
+
+**File:** `src/blocks-acf/{block-name}/style.scss`
+
+**Structure (example):**
 ```scss
 @use '~design' as *;
 
@@ -213,9 +228,7 @@ mkdir -p src/blocks-acf/{block-name}/acf-json
 - Use `position: relative; z-index: 2;` for content over background images
 - Use `position: absolute; inset: 0;` for full-coverage background images
 
-**DO NOT create `style.scss` in the block directory** - it won't be compiled correctly. Always use `src/styles/blocks/_{block-name}.scss`
-
-### 6. Build the Block
+### 7. Build the Block
 
 **Command:**
 ```bash
@@ -223,52 +236,62 @@ npm run build-scripts
 ```
 
 **What happens:**
+- Scripts and styles compiled
 - Block files copied to `build/blocks-acf/{block-name}/`
-- Styles compiled into main CSS bundle
 - Twig template copied
 - Block registered in WordPress
 
 **Verify build output:**
-- Check `build/blocks-acf/{block-name}/` contains `block.json` and `.twig` file
-- Styles should increase main CSS bundle size (visible in build output)
+- Check `build/blocks-acf/{block-name}/` contains `block.json`, `.twig` file, `script.js` file and `style-script.css` file
 - No errors in compilation
 
-### 7. Verify and Test
+### 8. Verify and Test
 
-**In WordPress admin:**
+If user explicitly asked for using Xfive MCP server for fulfilling tasks, then follow MCP-based Verification and Testing Procedure. Otherwise fall back to Manual Verification and Testing Procedure.
+
+#### MCP-based Verification and Testing Procedure
+**Use Xfive MCP server:**
+1. Add a test page
+2. Use proper tools to add block
+3. Save page
+4. Check if rendered output matches expected result
+5. Delete page
+
+#### Manual Verification and Testing Procedure
+
+**Ask user to perform the following tasks in WordPress admin:**
 1. Refresh ACF field groups (Settings > Custom Fields)
 2. Edit a page/post
 3. Add block via block inserter (search for block name)
 4. Configure ACF fields
 5. Preview/publish to see styled output
 
-**Common issues:**
+#### Common issues:
 - **Block not appearing:** Check `block.json` name matches ACF location value
+- **Block not rendering:** Check `.twig` name matches the folder name exactly
 - **Fields not showing:** Verify ACF JSON `location` matches block name exactly
-- **Styles not applied:** Ensure styles are in `src/styles/blocks/` not block directory
-- **Twig errors:** Check for trailing whitespace, proper Twig syntax
+- **Styles not applied:** Ensure `style.scss` is included in `script.js`
 
 ## Complete Example: Hero Block with Image, Navigation, and Text
 
 **Directory structure:**
 ```
-src/blocks-acf/custom-hero-example/
+src/blocks-acf/custom-block/
 ├── acf-json/
-│   └── group_custom_hero_example.json
+│   └── group_custom_block.json
 ├── block.json
-└── custom-hero-example.twig
-
-src/styles/blocks/
-└── _custom-hero-example.scss
+├── script.js
+├── style.scss
+└── custom-block.twig
 ```
 
 **block.json:**
 ```json
 {
-  "name": "chisel/custom-hero-example",
-  "title": "Custom Hero Block",
+  "name": "chisel/custom-block",
+  "title": "Custom Block",
   "category": "chisel-blocks",
-  "icon": "cover-image",
+  "icon": "generic",
   "apiVersion": 3,
   "acf": {
     "mode": "preview",
@@ -277,14 +300,16 @@ src/styles/blocks/
   },
   "supports": {
     "align": ["wide", "full"]
-  }
+  },
+  "script": "file:./script.js",
+  "style": ["file:./style-script.css"]
 }
 ```
 
 **ACF fields (simplified):**
 ```json
 {
-  "key": "group_custom_hero",
+  "key": "group_custom_block",
   "fields": [
     {
       "key": "field_bg_image",
@@ -309,29 +334,29 @@ src/styles/blocks/
       "required": 1
     }
   ],
-  "location": [[{"param": "block", "operator": "==", "value": "chisel/custom-hero-example"}]]
+  "location": [[{"param": "block", "operator": "==", "value": "chisel/custom-block"}]]
 }
 ```
 
 **Twig template:**
 ```twig
 <div {{ wrapper_attributes }} data-block-id="{{ block.id }}">
-  <div class="b-custom-hero__inner {{ block.align == 'full' ? 'alignfull' : '' }}">
+  <div class="b-custom-block">
     {% if fields.background_image and fields.heading %}
 
-      <div class="b-custom-hero__image">
+      <div class="b-custom-block__image">
         {{ get_responsive_image(fields.background_image, 'full', {fetchpriority: 'high'}) }}
       </div>
 
       {% if fields.navigation_items is not empty %}
-        <nav class="b-custom-hero__nav">
+        <nav class="b-custom-block__nav">
           {% for item in fields.navigation_items %}
             <a href="{{ item.url }}">{{ item.label }}</a>
           {% endfor %}
         </nav>
       {% endif %}
 
-      <h1 class="b-custom-hero__heading">{{ fields.heading }}</h1>
+      <h1 class="b-custom-block__heading">{{ fields.heading }}</h1>
 
     {% else %}
       {% include 'partials/block-edit-button.twig' with {'block_name': 'Custom Hero'} %}
@@ -340,17 +365,22 @@ src/styles/blocks/
 </div>
 ```
 
-**Styles (src/styles/blocks/_custom-hero-example.scss):**
+**Scripts:**
+```js
+import './style.scss';
+```
+
+**Styles:**
 ```scss
 @use '~design' as *;
 
-.b-custom-hero__inner {
+.b-custom-block__inner {
   position: relative;
   min-height: 75vh;
   padding: px-rem(20);
 }
 
-.b-custom-hero__image {
+.b-custom-block__image {
   position: absolute;
   inset: 0;
 
@@ -361,12 +391,12 @@ src/styles/blocks/
   }
 }
 
-.b-custom-hero__nav {
+.b-custom-block__nav {
   position: relative;
   z-index: 2;
 }
 
-.b-custom-hero__heading {
+.b-custom-block__heading {
   position: relative;
   z-index: 2;
   font-size: px-rem(48);
@@ -379,19 +409,15 @@ src/styles/blocks/
 - [ ] Block name in `block.json` matches ACF location value exactly
 - [ ] ACF JSON file has unique `key` values for group and all fields
 - [ ] Twig template uses `{{ wrapper_attributes }}` on outer div
-- [ ] Twig template has no trailing whitespace
-- [ ] Styles are in `src/styles/blocks/_{block-name}.scss` NOT in block directory
+- [ ] Styles are included in `script.js`
 - [ ] Block uses BEM naming with `b-` prefix
 - [ ] `npm run build-scripts` completed without errors
-- [ ] ACF field groups refreshed in WordPress admin
 
 ## Key Differences from Standard WordPress Blocks
 
-1. **No separate style.scss compilation** - Styles must be in main theme styles directory
-2. **Twig instead of PHP** - Use Twig templating syntax, not PHP
-3. **ACF JSON for fields** - Field definitions in JSON, not PHP code
-4. **Auto-generated index files** - Don't manually edit `_index.scss` files
-5. **BEM with b- prefix** - Block classes use `.b-{name}__element` pattern
+1. **Twig instead of PHP** - Use Twig templating syntax, not PHP
+2. **ACF JSON for fields** - Field definitions in JSON, not PHP code
+3. **BEM with b- prefix** - Block classes use `.b-{name}__element` pattern
 
 ## Build Commands
 

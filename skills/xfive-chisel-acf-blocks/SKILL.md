@@ -41,7 +41,7 @@ src/blocks-acf/
 mkdir -p src/blocks-acf/{block-name}/acf-json
 ```
 
-**Important:** Use kebab-case for block names (e.g., `custom-block`, not `CustomHeroBallerina`)
+**Important:** Use kebab-case for block names (e.g., `custom-hero-example`, not `CustomHeroExample`)
 
 ### 2. Create block.json Configuration
 

@@ -15,6 +15,7 @@ npx skills add xfiveco/skills
 
 - `skills/plan-task/SKILL.md`
 - `skills/task-complete/SKILL.md`
+- `skills/xfive-chisel-acf-blocks/SKILL.md`
 
 Each skill lives in its own directory and is defined by a `SKILL.md` file.
 
@@ -27,6 +28,10 @@ Reads `task.md`, scans the repository, captures discoveries, asks clarifying que
 ### `task-complete`
 
 Finalizes a completed task by preparing MR/PR title and description, handling `task.md` cleanup, and guiding the final push/open-PR step.
+
+### `xfive-chisel-acf-blocks`
+
+Create custom ACF block in WordPress themes based on Chisel 2.0.
 
 ## Notes
 

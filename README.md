@@ -16,6 +16,7 @@ npx skills add xfiveco/skills
 - `skills/plan-task/SKILL.md`
 - `skills/task-complete/SKILL.md`
 - `skills/xfive-figma-to-wordpress/SKILL.md`
+- `skills/xfive-chisel-acf-blocks/SKILL.md`
 
 Each skill lives in its own directory and is defined by a `SKILL.md` file.
 
@@ -32,6 +33,10 @@ Finalizes a completed task by preparing MR/PR title and description, handling `t
 ### `xfive-figma-to-wordpress`
 
 Implement Figma designs. Create WordPress pages from Figma designs. Create WordPress blocks and components from Figma designs. Compliment Figma MCP server.
+
+### `xfive-chisel-acf-blocks`
+
+Create custom ACF block in WordPress themes based on Chisel 2.0.
 
 ## Notes
 

@@ -425,6 +425,27 @@ import './style.scss';
 - `npm run build` - Full build including linting and validation
 - `npm run dev` - Development mode with watch
 
+## Usage hints
+
+ACF Blocks are populated with data from ACF fields. When **programmatically creating block markup** 
+(e.g., via WP-CLI, PHP scripts, or REST API), the field names in the `data` attribute must be 
+prefixed with `field_`, otherwise the block will not render correctly.
+
+Let's consider this hypothetical case. We are rendering `chisel/sample-block`. The block has a custom select field added. The field's name is `my_custom_field`. To properly pass the content to the block, we need to use the name prefixed with `field_`, otherwise the block will not render correctly. See the examples below.
+
+**Incorrect**:
+```
+<!-- wp:chisel/sample-block {"name":"chisel/sample-block","data":{"my_custom_field_select":"123"},"mode":"preview","alignContent":"top"} /-->
+```
+
+**Correct**:
+```
+<!-- wp:chisel/sample-block {"name":"chisel/sample-block","data":{"field_my_custom_field_select":"123"},"mode":"preview","alignContent":"top"} /-->
+```
+
+**Note:** This `field_` prefix is only needed in the block markup JSON. In Twig templates, 
+you access the field using its original name: `{{ fields.my_custom_field }}` (without the prefix).
+
 ---
 
 **This skill ensures ACF blocks are created correctly the first time, avoiding common pitfalls with styling, field registration, and template structure in the Chisel WordPress theme.**

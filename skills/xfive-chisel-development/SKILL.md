@@ -205,6 +205,3 @@ Pre-commit runs lint-staged (ESLint, Stylelint, Prettier, PHPCS, twigcs) and blo
 - Do not style across component boundaries; if a shared component needs a variant, add an explicit modifier or API within that component instead.
 - Register project assets via the provided hooks in `custom/app/WP/Assets.php` instead of calling `wp_enqueue_*` directly.
 - Register CPTs and taxonomies via filters, not ad hoc `register_post_type()` calls.
-- When creating markdown tables, add `<!-- prettier-ignore -->` on top of them.
-- Use imperative, sentence-case commit messages without prefixes, for example `Implement redesigned site header`.
-- When asked to prepare a plan, write it to a `plans/` directory in the project root (create if it doesn't exist). Use descriptive filenames like `plans/feature-name.md`. Do not start implementation until the plan is explicitly approved by the user.

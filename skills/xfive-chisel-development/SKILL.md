@@ -194,7 +194,6 @@ Pre-commit runs lint-staged (ESLint, Stylelint, Prettier, PHPCS, twigcs) and blo
 ## Important Notes
 
 - When working with `npm run create-block` or `npm run add-page`, always run these commands without any params and let the interactive prompts guide you. This ensures proper configuration and prevents errors.
-- `cheerio` is available and may be helpful when fetching online resources.
 - **Always read [References](references/) before planning any work.** Use this guide:
   - For architecture questions or file structure → read `chisel-architecture-and-files.md`
   - For feature implementation workflow → read `chisel-building-playbook.md`

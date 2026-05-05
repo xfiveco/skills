@@ -15,6 +15,7 @@ npx skills add xfiveco/skills
 
 - `skills/plan-task/SKILL.md`
 - `skills/task-complete/SKILL.md`
+- `skills/google-docs/SKILL.md`
 - `skills/xfive-figma-to-wordpress/SKILL.md`
 - `skills/xfive-chisel-acf-blocks/SKILL.md`
 
@@ -29,6 +30,10 @@ Reads `task.md`, scans the repository, captures discoveries, asks clarifying que
 ### `task-complete`
 
 Finalizes a completed task by preparing MR/PR title and description, handling `task.md` cleanup, and guiding the final push/open-PR step.
+
+### `google-docs`
+
+Reads content from an already-open Google Doc or applies small typo, grammar, and wording fixes as suggestion-style edits with comments.
 
 ### `xfive-figma-to-wordpress`
 

@@ -1,6 +1,6 @@
 ---
 name: xfive-remote-repo-code-review
-description: Review code from GitHub pull requests or GitLab merge requests using CLI tools. ALWAYS use this skill when the user mentions: review a PR, review a MR, review pull request, review merge request, code review, check PR, check MR, look at PR, look at MR, or any variation of reviewing remote repository changes.
+description: Review code from GitHub pull requests or GitLab merge requests using CLI tools. ALWAYS use this skill when the user mentions to review a PR, review a MR, review pull request, review merge request, code review, check PR, check MR, look at PR, look at MR, or any variation of reviewing remote repository changes.
 compatibility: Requires GitHub CLI (gh) for GitHub repositories or GitLab CLI (glab) for GitLab repositories
 ---
 

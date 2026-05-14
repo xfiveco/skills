@@ -1,12 +1,14 @@
 ---
 name: xfive-remote-repo-code-review
-description: Review code from GitHub pull requests or GitLab merge requests using CLI tools. Use when asked to review a PR, MR, pull request, merge request, or perform code review from remote repositories.
+description: Review code from GitHub pull requests or GitLab merge requests using CLI tools. ALWAYS use this skill when the user mentions: review a PR, review a MR, review pull request, review merge request, code review, check PR, check MR, look at PR, look at MR, or any variation of reviewing remote repository changes.
 compatibility: Requires GitHub CLI (gh) for GitHub repositories or GitLab CLI (glab) for GitLab repositories
 ---
 
 # Remote Repository Code Review
 
 This skill helps you review code from GitHub pull requests or GitLab merge requests by fetching diffs, descriptions, and comments using the appropriate CLI tool.
+
+> **IMPORTANT**: You MUST follow ALL steps in this workflow in order, without skipping any. Steps 1–6 are all mandatory. Do not stop after presenting the review summary — you MUST complete step 6 and ask the user whether to post the review.
 
 ## Workflow
 
@@ -99,10 +101,12 @@ Display a comprehensive review summary including:
 - **Suggestions**: Specific recommendations for improvement
 - **Questions**: Any clarifications needed from the author
 
-### 6. Post Review Comment (Optional)
+### 6. Post Review Comment (Required)
 
-After presenting the summary, ask the user:
+**You MUST always perform this step.** After presenting the review summary, you MUST ask the user:
 > "Would you like me to post this review as a comment to the [pull request/merge request]?"
+
+Do not end the workflow without asking this question.
 
 **If the user agrees:**
 
@@ -122,7 +126,7 @@ gh pr review <PR_NUMBER> --request-changes --body "<review_text>"
 glab mr note <MR_NUMBER> "<review_text>"
 ```
 
-**If the user declines**, thank them and end the workflow.
+**If the user declines**, acknowledge and end the workflow.
 
 ## Gotchas
 
@@ -142,5 +146,5 @@ glab mr note <MR_NUMBER> "<review_text>"
 3. Fetch PR: `gh pr view 123`, `gh pr diff 123`, `gh pr view 123 --comments`
 4. Analyze the code changes
 5. Present review summary
-6. Ask: "Would you like me to post this review as a comment to the pull request?"
+6. **Always ask**: "Would you like me to post this review as a comment to the pull request?"
 7. If yes: `gh pr review 123 --comment --body "<summary>"`

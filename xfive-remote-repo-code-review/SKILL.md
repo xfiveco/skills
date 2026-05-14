@@ -110,6 +110,8 @@ Do not end the workflow without asking this question.
 
 **If the user agrees:**
 
+Format the review text properly so that it does not cause the CLI parser to crash. Pay special attention not to use special characters that could cause syntax errors, like for example quotation marks of any kind.
+
 **For GitHub:**
 ```bash
 gh pr review <PR_NUMBER> --comment --body "<review_text>"

@@ -18,6 +18,7 @@ npx skills add xfiveco/skills
 - `skills/xfive-figma-to-wordpress/SKILL.md`
 - `skills/xfive-chisel-acf-blocks/SKILL.md`
 - `skills/xfive-chisel-development/SKILL.md`
+- `skills/xfive-remote-repo-code-review/SKILL.md`
 
 Each skill lives in its own directory and is defined by a `SKILL.md` file.
 
@@ -42,6 +43,10 @@ Create custom ACF block in WordPress themes based on Chisel 2.0.
 ### `xfive-chisel-development`
 
 Comprehensive set of guidelines for AI agents regarding WordPress development with Chisel 2.0 framework.
+
+### `xfive-remote-repo-code-review`
+
+Supports reviewing pull requests (GitHub) or merge requests (Gitlab) with CLI tools.
 
 ## Notes
 

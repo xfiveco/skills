@@ -46,7 +46,7 @@ Comprehensive set of guidelines for AI agents regarding WordPress development wi
 
 ### `xfive-remote-repo-code-review`
 
-Supports reviewing pull requests (GitHub) or merge requests (Gitlab) with CLI tools.
+Supports reviewing pull requests (GitHub) or merge requests (GitLab) with CLI tools.
 
 ## Notes
 

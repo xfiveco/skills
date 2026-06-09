@@ -125,7 +125,7 @@ gh pr review <PR_NUMBER> --request-changes --body "<review_text>"
 
 **For GitLab:**
 ```bash
-glab mr note <MR_NUMBER> "<review_text>"
+glab mr note <MR_NUMBER> -m "<review_text>"
 ```
 
 **If the user declines**, acknowledge and end the workflow.
